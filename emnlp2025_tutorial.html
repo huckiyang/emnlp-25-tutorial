@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spoken Conversational Agents with LLMs — EMNLP 2025 Tutorial</title>
+  <style>
+    :root{
+      --bg:#f7f9fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0b71d0;
+      --accent-2:#0b97d0;
+      --border:#e6eef8;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color-scheme: light;
+    }
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg),#ffffff);
+      padding:24px;
+      color:#0f1724;
+    }
+    .container{
+      max-width:900px;
+      margin:0 auto;
+    }
+    header{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:20px;
+      box-shadow: 0 6px 18px rgba(12,36,63,0.06);
+    }
+    header h1{
+      margin:0 0 6px 0;
+      font-size:1.6rem;
+      color:var(--accent);
+    }
+    header .meta{
+      color:var(--muted);
+      font-size:0.95rem;
+      margin-bottom:8px;
+    }
+    .lead{
+      margin-top:12px;
+      color:#0b1220;
+      line-height:1.5;
+    }
+    .schedule{
+      margin-top:18px;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:var(--card);
+    }
+    .session-row{
+      display:grid;
+      grid-template-columns:120px 1fr 200px;
+      gap:12px;
+      align-items:center;
+      padding:14px 16px;
+      border-bottom:1px dashed #eef6fb;
+    }
+    .session-row.header{
+      background:linear-gradient(90deg,#eef7ff,#ffffff);
+      font-weight:600;
+      color:#08325a;
+      border-bottom:1px solid var(--border);
+    }
+    .time{
+      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,monospace;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+    .title{
+      font-size:1rem;
+      color:#07102a;
+    }
+    .speaker{
+      font-size:0.92rem;
+      color:#0f1724;
+      font-weight:600;
+    }
+    .affil{
+      font-size:0.88rem;
+      color:var(--muted);
+      font-weight:400;
+    }
+    .note{
+      font-size:0.9rem;
+      color:var(--muted);
+    }
+    .spotlight{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:12px 16px;
+    }
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    @media (max-width:680px){
+      .session-row{ grid-template-columns:1fr; }
+      .session-row.header{ grid-template-columns:1fr 1fr; }
+      .time{ margin-bottom:6px; }
+    }
+    .btn {
+      display:inline-block;
+      background:linear-gradient(180deg,var(--accent),var(--accent-2));
+      color:#fff;
+      padding:8px 12px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow: 0 6px 18px rgba(11,113,208,0.18);
+      margin-top:8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header aria-labelledby="title">
+      <h1 id="title">Spoken Conversational Agents with LLMs</h1>
+      <div class="meta">Saturday, Nov 8 — 09:00 to 12:30 — Room 108 — EMNLP 2025 tutorial</div>
+      <div class="lead">
+        A half-day tutorial exploring the intersection of large language models and spoken conversational agent design — from speech & language modeling to multimodal reasoning and conversational systems.
+      </div>
+    </header>
+
+    <section class="schedule" aria-labelledby="schedule-heading" style="margin-top:18px;">
+      <div class="session-row header" id="schedule-heading">
+        <div>Time</div>
+        <div>Session / Talk</div>
+        <div>Speaker &amp; Affiliation</div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Opening and introduction">
+        <div class="time">09:00 — 09:10</div>
+        <div>
+          <div class="title">Welcome &amp; Introduction</div>
+          <div class="note">Overview of the tutorial goals and schedule</div>
+        </div>
+        <div>
+          <div class="speaker">Organizers</div>
+          <div class="affil">EMNLP 2025</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Main speaker">
+        <div class="time">09:10 — 09:50</div>
+        <div>
+          <div class="title">Conversational Systems &amp; Agents</div>
+          <div class="note">Main speaker talk — foundations and research directions for spoken conversational agents with LLMs</div>
+        </div>
+        <div>
+          <div class="speaker">Prof. Larry P. Heck</div>
+          <div class="affil">Georgia Tech</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Spotlight talk 1">
+        <div class="time">09:55 — 10:05</div>
+        <div>
+          <div class="title">Spotlight Talk</div>
+          <div class="note">Short invited talk</div>
+        </div>
+        <div>
+          <div class="speaker">Prof. Gokhan Tur</div>
+          <div class="affil">UIUC</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Andreas Stolcke talk">
+        <div class="time">10:10 — 10:50</div>
+        <div>
+          <div class="title">Speech and Language Modeling</div>
+          <div class="note">Techniques and perspectives on integrating speech models with LLMs</div>
+        </div>
+        <div>
+          <div class="speaker">Andreas Stolcke</div>
+          <div class="affil">Uniphore</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Spotlight talk 2">
+        <div class="time">10:55 — 11:15</div>
+        <div>
+          <div class="title">Spotlight Talk</div>
+          <div class="note">Invited presentation</div>
+        </div>
+        <div>
+          <div class="speaker">Prof. Hua Shen</div>
+          <div class="affil">NYU Shanghai</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Spotlight talk 3">
+        <div class="time">11:15 — 11:30</div>
+        <div>
+          <div class="title">Spotlight Talk</div>
+          <div class="note">Invited presentation</div>
+        </div>
+        <div>
+          <div class="speaker">Dong Zhang</div>
+          <div class="affil">Xiaomi LLM-Core Team</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Huck Yang talk">
+        <div class="time">11:30 — 12:20</div>
+        <div>
+          <div class="title">Multi-Modal Speech Agents &amp; Reasoning</div>
+          <div class="note">Integration of multimodal inputs and reasoning in speech-based agent design</div>
+        </div>
+        <div>
+          <div class="speaker">Huck Yang</div>
+          <div class="affil">NVIDIA</div>
+        </div>
+      </div>
+
+      <div class="session-row" role="article" aria-label="Closing">
+        <div class="time">12:20 — 12:30</div>
+        <div>
+          <div class="title">Closing Remarks &amp; Q&amp;A</div>
+          <div class="note">Wrap-up and pointers for further reading</div>
+        </div>
+        <div>
+          <div class="speaker">Organizers</div>
+          <div class="affil">EMNLP 2025</div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="spotlight-heading" style="margin-top:18px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;">
+      <h2 id="spotlight-heading" style="margin:0 0 8px 0;color:#08325a;font-size:1.05rem;">Spotlight Talks (short)</h2>
+      <div class="spotlight" aria-live="polite">
+        <div>
+          <strong>Prof. Gokhan Tur</strong> — UIUC (09:55 — 10:05)
+        </div>
+        <div>
+          <strong>Prof. Hua Shen</strong> — NYU Shanghai (10:55 — 11:15)
+        </div>
+        <div>
+          <strong>Dong Zhang</strong> — Xiaomi LLM-Core Team (11:15 — 11:30)
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Room 108 — EMNLP 2025 | Saturday, Nov 8</div>
+      <div style="margin-top:8px;">
+        <a class="btn" href="#" onclick="alert('You can copy this page or save it as an HTML file for distribution.');return false;">Save / Print</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
