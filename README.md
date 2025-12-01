@@ -6,9 +6,7 @@ EMNLP Tutorial
 - Slides Material: https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link
 
 
-# Agenda of this Tutorial
-
-# Updated Agenda of this Tutorial
+## Agenda of this Tutorial
 
 | Time | Speaker | Affiliation | Topic |
 | :--- | :--- | :--- | :--- |
@@ -20,7 +18,7 @@ EMNLP Tutorial
 | 11:30 – 12:20 pm | **Huck Yang** | NVIDIA | Multi-Modal Speech Agents & Reasoning |
 
 
-- Reference
+## Reference
 
 ```bib
 @inproceedings{yang-etal-2025-spoken,
