@@ -20,6 +20,8 @@ EMNLP Tutorial
 | 11:30 – 12:20 pm | **Huck Yang** | NVIDIA | Multi-Modal Speech Agents & Reasoning |
 
 
+- Reference
+
 ```bib
 @inproceedings{yang-etal-2025-spoken,
     title = "Spoken Conversational Agents with Large Language Models",
