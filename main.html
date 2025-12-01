@@ -1,261 +1,964 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Spoken Conversational Agents with LLMs — EMNLP 2025 Tutorial</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoken Conversational Agents with Large Language Models — EMNLP 2025 Tutorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#f7f9fb;
-      --card:#ffffff;
-      --muted:#6b7280;
-      --accent:#0b71d0;
-      --accent-2:#0b97d0;
-      --border:#e6eef8;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      color-scheme: light;
+    :root {
+      --bg-dark: #0a0e17;
+      --bg-card: #111827;
+      --bg-card-hover: #1a2332;
+      --accent-primary: #38bdf8;
+      --accent-secondary: #a78bfa;
+      --accent-tertiary: #34d399;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: rgba(148, 163, 184, 0.12);
+      --glow: rgba(56, 189, 248, 0.15);
     }
-    body{
-      margin:0;
-      background:linear-gradient(180deg,var(--bg),#ffffff);
-      padding:24px;
-      color:#0f1724;
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .container{
-      max-width:900px;
-      margin:0 auto;
+
+    html {
+      scroll-behavior: smooth;
     }
-    header{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:10px;
-      padding:20px;
-      box-shadow: 0 6px 18px rgba(12,36,63,0.06);
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
     }
-    header h1{
-      margin:0 0 6px 0;
-      font-size:1.6rem;
-      color:var(--accent);
+
+    /* Animated background */
+    .bg-pattern {
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(167, 139, 250, 0.08), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(52, 211, 153, 0.06), transparent);
+      pointer-events: none;
+      z-index: 0;
     }
-    header .meta{
-      color:var(--muted);
-      font-size:0.95rem;
-      margin-bottom:8px;
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
     }
-    .lead{
-      margin-top:12px;
-      color:#0b1220;
-      line-height:1.5;
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
     }
-    .schedule{
-      margin-top:18px;
-      border-radius:10px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background:var(--card);
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .session-row{
-      display:grid;
-      grid-template-columns:120px 1fr 200px;
-      gap:12px;
-      align-items:center;
-      padding:14px 16px;
-      border-bottom:1px dashed #eef6fb;
+
+    .nav-brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent-primary);
     }
-    .session-row.header{
-      background:linear-gradient(90deg,#eef7ff,#ffffff);
-      font-weight:600;
-      color:#08325a;
-      border-bottom:1px solid var(--border);
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
     }
-    .time{
-      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,monospace;
-      color:var(--muted);
-      font-size:0.95rem;
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
     }
-    .title{
-      font-size:1rem;
-      color:#07102a;
+
+    .nav-links a:hover {
+      color: var(--accent-primary);
     }
-    .speaker{
-      font-size:0.92rem;
-      color:#0f1724;
-      font-weight:600;
+
+    /* Hero Section */
+    .hero {
+      padding: 140px 0 80px;
+      text-align: center;
     }
-    .affil{
-      font-size:0.88rem;
-      color:var(--muted);
-      font-weight:400;
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 8px 16px;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--accent-primary);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease-out;
     }
-    .note{
-      font-size:0.9rem;
-      color:var(--muted);
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.6s ease-out 0.1s backwards;
     }
-    .spotlight{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      padding:12px 16px;
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease-out 0.2s backwards;
     }
-    footer{
-      margin-top:18px;
-      text-align:center;
-      color:var(--muted);
-      font-size:0.9rem;
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    @media (max-width:680px){
-      .session-row{ grid-template-columns:1fr; }
-      .session-row.header{ grid-template-columns:1fr 1fr; }
-      .time{ margin-bottom:6px; }
+
+    .hero-description {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      animation: fadeInUp 0.6s ease-out 0.3s backwards;
     }
+
+    .hero-image {
+      max-width: 600px;
+      margin: 40px auto 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 80px -20px rgba(56, 189, 248, 0.25);
+      border: 1px solid var(--border);
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+
+    .hero-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      animation: fadeInUp 0.6s ease-out 0.35s backwards;
+    }
+
     .btn {
-      display:inline-block;
-      background:linear-gradient(180deg,var(--accent),var(--accent-2));
-      color:#fff;
-      padding:8px 12px;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:600;
-      box-shadow: 0 6px 18px rgba(11,113,208,0.18);
-      margin-top:8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: var(--bg-dark);
+      box-shadow: 0 8px 32px -8px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px -8px rgba(56, 189, 248, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-primary);
+    }
+
+    /* Section Styling */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    /* Schedule Cards */
+    .schedule-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .schedule-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 24px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .schedule-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(56, 189, 248, 0.3);
+      transform: translateX(4px);
+    }
+
+    .schedule-card.spotlight {
+      border-left: 3px solid var(--accent-secondary);
+    }
+
+    .schedule-card.main {
+      border-left: 3px solid var(--accent-primary);
+    }
+
+    .schedule-time {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    .schedule-content h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .schedule-content p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .schedule-speaker {
+      text-align: right;
+    }
+
+    .schedule-speaker .name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 1rem;
+    }
+
+    .schedule-speaker .affiliation {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .schedule-actions {
+      margin-top: 12px;
+    }
+
+    .btn-slides {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 8px;
+      color: var(--accent-primary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-slides:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--accent-primary);
+    }
+
+    .btn-slides svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Speakers Section */
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .speaker-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .speaker-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px -20px rgba(56, 189, 248, 0.2);
+    }
+
+    .speaker-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--bg-dark);
+    }
+
+    .speaker-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .speaker-card .role {
+      color: var(--accent-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .speaker-card .affiliation {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Materials Section */
+    .materials-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .materials-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .materials-card p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .materials-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      text-align: left;
+    }
+
+    .material-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .material-item:hover {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: var(--accent-primary);
+    }
+
+    .material-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .material-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--bg-dark);
+    }
+
+    .material-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .material-info .title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .material-info .speaker {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Citation Section */
+    .citation-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .citation-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .citation-code {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    .citation-code pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: var(--accent-primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--accent-primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 120px 0 60px;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .schedule-card {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .schedule-speaker {
+        text-align: left;
+      }
+
+      .speakers-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container" role="main">
-    <header aria-labelledby="title">
-      <h1 id="title">Spoken Conversational Agents with LLMs</h1>
-      <div class="meta">Saturday, Nov 8 — 09:00 to 12:30 — Room 108 — EMNLP 2025 tutorial</div>
-      <div class="lead">
-        A half-day tutorial exploring the intersection of large language models and spoken conversational agent design — from speech & language modeling to multimodal reasoning and conversational systems.
-      </div>
-    </header>
+  <div class="bg-pattern"></div>
 
-    <section class="schedule" aria-labelledby="schedule-heading" style="margin-top:18px;">
-      <div class="session-row header" id="schedule-heading">
-        <div>Time</div>
-        <div>Session / Talk</div>
-        <div>Speaker &amp; Affiliation</div>
-      </div>
+  <nav>
+    <div class="container">
+      <div class="nav-brand">EMNLP 2025 Tutorial</div>
+      <ul class="nav-links">
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#materials">Materials</a></li>
+        <li><a href="#citation">Citation</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <div class="session-row" role="article" aria-label="Opening and introduction">
-        <div class="time">09:00 — 09:10</div>
-        <div>
-          <div class="title">Welcome &amp; Introduction</div>
-          <div class="note">Overview of the tutorial goals and schedule</div>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          EMNLP 2025 Tutorial
         </div>
-        <div>
-          <div class="speaker">Organizers</div>
-          <div class="affil">EMNLP 2025</div>
+        <h1>Spoken Conversational Agents<br>with Large Language Models</h1>
+        <div class="hero-meta">
+          <span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Saturday, November 8, 2025
+          </span>
+          <span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            09:00 – 12:30
+          </span>
+          <span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Suzhou, China
+          </span>
         </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Main speaker">
-        <div class="time">09:10 — 09:50</div>
-        <div>
-          <div class="title">Conversational Systems &amp; Agents</div>
-          <div class="note">Main speaker talk — foundations and research directions for spoken conversational agents with LLMs</div>
+        <p class="hero-description">
+          A half-day tutorial exploring the convergence of spoken conversational agents toward voice-native LLMs — from cascaded ASR/NLU to end-to-end, retrieval and vision-grounded systems, covering cross-modal alignment, joint speech–text training, and practical recipes for building robust conversational AI.
+        </p>
+        <div class="hero-cta">
+          <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn btn-primary">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download All Materials
+          </a>
+          <a href="#schedule" class="btn btn-secondary">View Schedule</a>
         </div>
-        <div>
-          <div class="speaker">Prof. Larry P. Heck</div>
-          <div class="affil">Georgia Tech</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Spotlight talk 1">
-        <div class="time">09:55 — 10:05</div>
-        <div>
-          <div class="title">Spotlight Talk</div>
-          <div class="note">Short invited talk</div>
-        </div>
-        <div>
-          <div class="speaker">Prof. Gokhan Tur</div>
-          <div class="affil">UIUC</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Andreas Stolcke talk">
-        <div class="time">10:10 — 10:50</div>
-        <div>
-          <div class="title">Speech and Language Modeling</div>
-          <div class="note">Techniques and perspectives on integrating speech models with LLMs</div>
-        </div>
-        <div>
-          <div class="speaker">Andreas Stolcke</div>
-          <div class="affil">Uniphore</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Spotlight talk 2">
-        <div class="time">10:55 — 11:15</div>
-        <div>
-          <div class="title">Spotlight Talk</div>
-          <div class="note">Invited presentation</div>
-        </div>
-        <div>
-          <div class="speaker">Prof. Hua Shen</div>
-          <div class="affil">NYU Shanghai</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Spotlight talk 3">
-        <div class="time">11:15 — 11:30</div>
-        <div>
-          <div class="title">Spotlight Talk</div>
-          <div class="note">Invited presentation</div>
-        </div>
-        <div>
-          <div class="speaker">Dong Zhang</div>
-          <div class="affil">Xiaomi LLM-Core Team</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Huck Yang talk">
-        <div class="time">11:30 — 12:20</div>
-        <div>
-          <div class="title">Multi-Modal Speech Agents &amp; Reasoning</div>
-          <div class="note">Integration of multimodal inputs and reasoning in speech-based agent design</div>
-        </div>
-        <div>
-          <div class="speaker">Huck Yang</div>
-          <div class="affil">NVIDIA</div>
-        </div>
-      </div>
-
-      <div class="session-row" role="article" aria-label="Closing">
-        <div class="time">12:20 — 12:30</div>
-        <div>
-          <div class="title">Closing Remarks &amp; Q&amp;A</div>
-          <div class="note">Wrap-up and pointers for further reading</div>
-        </div>
-        <div>
-          <div class="speaker">Organizers</div>
-          <div class="affil">EMNLP 2025</div>
+        <div class="hero-image">
+          <img src="https://github.com/huckiyang/emnlp-25-spoken-agents-llm/blob/main/spok-llm-main.PNG?raw=true" alt="Spoken LLM Tutorial Overview">
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="spotlight-heading" style="margin-top:18px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px;">
-      <h2 id="spotlight-heading" style="margin:0 0 8px 0;color:#08325a;font-size:1.05rem;">Spotlight Talks (short)</h2>
-      <div class="spotlight" aria-live="polite">
-        <div>
-          <strong>Prof. Gokhan Tur</strong> — UIUC (09:55 — 10:05)
+    <section id="schedule">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tutorial Schedule</h2>
+          <p>Half-day program featuring main talks and spotlight presentations</p>
         </div>
-        <div>
-          <strong>Prof. Hua Shen</strong> — NYU Shanghai (10:55 — 11:15)
-        </div>
-        <div>
-          <strong>Dong Zhang</strong> — Xiaomi LLM-Core Team (11:15 — 11:30)
+
+        <div class="schedule-grid">
+          <div class="schedule-card">
+            <div class="schedule-time">09:00 – 09:10</div>
+            <div class="schedule-content">
+              <h3>Welcome & Introduction</h3>
+              <p>Overview of the tutorial goals and schedule</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  Opening Slides
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Organizers</div>
+              <div class="affiliation">EMNLP 2025</div>
+            </div>
+          </div>
+
+          <div class="schedule-card main">
+            <div class="schedule-time">09:10 – 09:50</div>
+            <div class="schedule-content">
+              <h3>Conversational Systems & Agents</h3>
+              <p>Foundations and research directions for spoken conversational agents with LLMs</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (PDF)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Prof. Larry P. Heck</div>
+              <div class="affiliation">Georgia Tech</div>
+            </div>
+          </div>
+
+          <div class="schedule-card spotlight">
+            <div class="schedule-time">09:55 – 10:05</div>
+            <div class="schedule-content">
+              <h3>Controllable Conversational AI & Task-Oriented Dialogue</h3>
+              <p>Spotlight talk on controllable dialogue systems</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (PPTX)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Prof. Gokhan Tur</div>
+              <div class="affiliation">UIUC</div>
+            </div>
+          </div>
+
+          <div class="schedule-card main">
+            <div class="schedule-time">10:10 – 10:50</div>
+            <div class="schedule-content">
+              <h3>Speech and Language Modeling</h3>
+              <p>Techniques and perspectives on integrating speech models with LLMs</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (PDF)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Andreas Stolcke</div>
+              <div class="affiliation">Uniphore</div>
+            </div>
+          </div>
+
+          <div class="schedule-card spotlight">
+            <div class="schedule-time">10:55 – 11:15</div>
+            <div class="schedule-content">
+              <h3>Bidirectional Human-AI Alignment & Value Alignment</h3>
+              <p>Spotlight talk on spoken conversational agent alignment</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (KEY)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Prof. Hua Shen</div>
+              <div class="affiliation">NYU Shanghai</div>
+            </div>
+          </div>
+
+          <div class="schedule-card spotlight">
+            <div class="schedule-time">11:15 – 11:30</div>
+            <div class="schedule-content">
+              <h3>End-to-End Spoken Language Models</h3>
+              <p>SpeechGPT, SpeechTokenizer, and MiMo-Audio architecture</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (PPTX)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Dong Zhang</div>
+              <div class="affiliation">Xiaomi LLM-Core</div>
+            </div>
+          </div>
+
+          <div class="schedule-card main">
+            <div class="schedule-time">11:30 – 12:20</div>
+            <div class="schedule-content">
+              <h3>Multi-Modal Speech Agents & Reasoning</h3>
+              <p>Integration of multimodal inputs and reasoning in speech-based agent design</p>
+              <div class="schedule-actions">
+                <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn-slides">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+                  View Slides (PDF)
+                </a>
+              </div>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Huck Yang</div>
+              <div class="affiliation">NVIDIA</div>
+            </div>
+          </div>
+
+          <div class="schedule-card">
+            <div class="schedule-time">12:20 – 12:30</div>
+            <div class="schedule-content">
+              <h3>Closing Remarks & Q&A</h3>
+              <p>Wrap-up and pointers for further reading</p>
+            </div>
+            <div class="schedule-speaker">
+              <div class="name">Organizers</div>
+              <div class="affiliation">EMNLP 2025</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div>Room 108 — EMNLP 2025 | Saturday, Nov 8</div>
-      <div style="margin-top:8px;">
-        <a class="btn" href="#" onclick="alert('You can copy this page or save it as an HTML file for distribution.');return false;">Save / Print</a>
+    <section id="materials">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tutorial Materials</h2>
+          <p>Download slides and supplementary materials from each speaker</p>
+        </div>
+
+        <div class="materials-card">
+          <h3>All Presentation Materials</h3>
+          <p>Access the complete collection of slides, demos, and resources from our Google Drive folder.</p>
+
+          <div class="materials-list">
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Opening Slides</div>
+                <div class="speaker">0-Opening Slides.pptx</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Conversational Systems & Agents</div>
+                <div class="speaker">Larry Heck — Georgia Tech</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Speech and Language Modeling</div>
+                <div class="speaker">Andreas Stolcke — Uniphore</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Multi-Modal Reasoning</div>
+                <div class="speaker">Huck Yang — NVIDIA</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Task-Oriented Dialogue</div>
+                <div class="speaker">Gokhan Tur — UIUC</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Spoken Conversational Agent Alignment</div>
+                <div class="speaker">Hua Shen — NYU Shanghai</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">MiMo-Audio & SpeechGPT</div>
+                <div class="speaker">Dong Zhang — Xiaomi</div>
+              </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="material-item">
+              <div class="material-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              </div>
+              <div class="material-info">
+                <div class="title">Demo Video — Omni TTS</div>
+                <div class="speaker">omni_tts.mp4</div>
+              </div>
+            </a>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn btn-primary">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Open Google Drive Folder
+            </a>
+          </div>
+        </div>
       </div>
-    </footer>
-  </div>
+    </section>
+
+    <section id="citation">
+      <div class="container">
+        <div class="section-header">
+          <h2>Citation</h2>
+          <p>If you find this tutorial useful, please cite our work</p>
+        </div>
+
+        <div class="citation-card">
+          <h3>
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            BibTeX Reference
+          </h3>
+          <div class="citation-code">
+            <pre id="bibtex">@inproceedings{yang-etal-2025-spoken,
+    title = "Spoken Conversational Agents with Large Language Models",
+    author = "Yang, Huck  and
+      Stolcke, Andreas  and
+      Heck, Larry P.",
+    editor = "Pyatkin, Valentina  and
+      Vlachos, Andreas",
+    booktitle = "Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing: Tutorial Abstracts",
+    month = nov,
+    year = "2025",
+    address = "Suzhou, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.emnlp-tutorials.3/",
+    doi = "10.18653/v1/2025.emnlp-tutorials.3",
+    pages = "7--8",
+    ISBN = "979-8-89176-336-4",
+}</pre>
+          </div>
+          <button class="copy-btn" onclick="copyBibtex()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            Copy to Clipboard
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        EMNLP 2025 Tutorial — Suzhou, China — November 8, 2025<br>
+        <a href="https://aclanthology.org/2025.emnlp-tutorials.3/" target="_blank">ACL Anthology</a> • 
+        <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank">Materials</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function copyBibtex() {
+      const bibtex = document.getElementById('bibtex').textContent;
+      navigator.clipboard.writeText(bibtex).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy to Clipboard';
+        }, 2000);
+      });
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 </html>
