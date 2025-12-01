@@ -8,8 +8,13 @@ EMNLP Tutorial
 
 # Agenda of this Tutorial
 
-| Speaker | Affiliation | Topic | Time |
+# Updated Agenda of this Tutorial
+
+| Time | Speaker | Affiliation | Topic |
 | :--- | :--- | :--- | :--- |
-| **Larry Heck** | Georgia Tech | Conversational Systems & Agents | 9:10 to 9:50 am |
-| **Andreas Stolcke** | Uniphore | Speech and Language Modeling | 10:10 to 10:50 am |
-| **Huck Yang** | NVIDIA | Multi-Modal Speech Agents & Reasoning | 11:30 to 12:20 am |
+| 9:10 – 9:50 am | **Larry Heck** | Georgia Tech | Conversational Systems & Agents |
+| 9:55 – 10:05 am | **Prof. Gokhan Tur** | UIUC | **Spotlight:** Controllable Conversational AI & Task-Oriented Dialogue |
+| 10:10 – 10:50 am | **Andreas Stolcke** | Uniphore | Speech and Language Modeling |
+| 10:55 – 11:15 am | **Prof. Hua Shen** | NYU Shanghai | **Spotlight:** Bidirectional Human-AI Alignment & Value Alignment |
+| 11:15 – 11:30 am | **Dong Zhang** | Xiaomi LLM-Core | **Spotlight:** End-to-End Spoken Language Models (SpeechGPT/SpeechTokenizer) |
+| 11:30 – 12:20 pm | **Huck Yang** | NVIDIA | Multi-Modal Speech Agents & Reasoning |
