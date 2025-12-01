@@ -239,6 +239,68 @@
       font-size: 1.05rem;
     }
 
+    /* Video Section */
+    .video-link-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .video-link-card:hover {
+      background: var(--bg-card-hover);
+      border-color: #ff0000;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px -20px rgba(255, 0, 0, 0.25);
+    }
+
+    .video-icon {
+      flex-shrink: 0;
+      color: #ff0000;
+    }
+
+    .video-link-info {
+      flex: 1;
+    }
+
+    .video-link-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .video-link-info p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .arrow-icon {
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+
+    .video-link-card:hover .arrow-icon {
+      transform: translateX(4px);
+      color: #ff0000;
+    }
+
+    @media (max-width: 768px) {
+      .video-link-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+      .arrow-icon {
+        display: none;
+      }
+    }
+
     /* Schedule Cards */
     .schedule-grid {
       display: flex;
@@ -591,6 +653,7 @@
     <div class="container">
       <div class="nav-brand">EMNLP 2025 Tutorial</div>
       <ul class="nav-links">
+        <li><a href="#video">Video</a></li>
         <li><a href="#schedule">Schedule</a></li>
         <li><a href="#materials">Materials</a></li>
         <li><a href="#citation">Citation</a></li>
@@ -624,15 +687,38 @@
           A half-day tutorial exploring the convergence of spoken conversational agents toward voice-native LLMs — from cascaded ASR/NLU to end-to-end, retrieval and vision-grounded systems, covering cross-modal alignment, joint speech–text training, and practical recipes for building robust conversational AI.
         </p>
         <div class="hero-cta">
-          <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn btn-primary">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            Download All Materials
+          <a href="https://www.youtube.com/watch?v=Qvb0Ov0Aa_Q" target="_blank" class="btn btn-primary">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            Watch Tutorial Video
           </a>
-          <a href="#schedule" class="btn btn-secondary">View Schedule</a>
+          <a href="https://drive.google.com/drive/folders/1j09InRj5gK5RfhDsMS8YiU03D_t8c5l6?usp=drive_link" target="_blank" class="btn btn-secondary">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Materials
+          </a>
         </div>
         <div class="hero-image">
           <img src="https://github.com/huckiyang/emnlp-25-spoken-agents-llm/blob/main/spok-llm-main.PNG?raw=true" alt="Spoken LLM Tutorial Overview">
         </div>
+      </div>
+    </section>
+
+    <section id="video">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tutorial Recording</h2>
+          <p>Watch the full tutorial presentation from EMNLP 2025</p>
+        </div>
+
+        <a href="https://www.youtube.com/watch?v=Qvb0Ov0Aa_Q" target="_blank" class="video-link-card">
+          <div class="video-icon">
+            <svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div class="video-link-info">
+            <h3>Watch Tutorial on YouTube</h3>
+            <p>Spoken Conversational Agents with Large Language Models — Full Recording</p>
+          </div>
+          <svg class="arrow-icon" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </section>
 
